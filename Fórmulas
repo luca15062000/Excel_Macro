@@ -1,0 +1,6 @@
+=(SUMPRODUCT((G:G>=2)*(F:F>E:E)*(ISNUMBER(MATCH(A:A,I:I,0)))*(E:E))+SUMPRODUCT((G:G>=2)*(F:F<>E:E)*(ISNA(MATCH(A:A,I:I,0)))*(E:E))) * Q5
+
+=(SUMPRODUCT((D:D="Singles")*(G:G>=2)*(F:F>E:E)*(ISNUMBER(MATCH(A:A,I:I,0)))*(E:E)) +
+SUMPRODUCT((D:D="Singles")*(G:G>=2)*(F:F<>E:E)*(ISNA(MATCH(A:A,I:I,0)))*(E:E)) +
+SUMPRODUCT((D:D="Doubles")*(G:G>=1.5)*(F:F>E:E)*(ISNUMBER(MATCH(A:A,I:I,0)))*(E:E)) +
+SUMPRODUCT((D:D="Doubles")*(G:G>=1.5)*(F:F<>E:E)*(ISNA(MATCH(A:A,I:I,0)))*(E:E)) + SUMPRODUCT((D:D<>"Singles")*(D:D<>"Doubles")*(F:F>E:E)*(ISNUMBER(MATCH(A:A,I:I,0)))*(E:E)) + SUMPRODUCT((D:D<>"Singles")*(D:D<>"Doubles")*(F:F<>E:E)*(ISNA(MATCH(A:A,I:I,0)))*(E:E))) * Q5
