@@ -1,0 +1,10 @@
+Sub OpenUserForm1()
+ColarTabelas.Show
+End Sub
+
+Public Function SplitTextBox(txt As String) As Variant
+Dim t As String
+t = Replace(txt, vbCr, vbLf)
+t = Replace(t, vbCrLf, vbLf)
+SplitTextBox = Split(t, vbLf)
+End Function
