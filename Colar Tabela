@@ -1,0 +1,140 @@
+Private Sub Calcular_Click()
+
+  Dim ws As Worksheet
+Set ws = ThisWorkbook.Sheets("Macro Club365")
+
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+
+ws.Range("A1:G" & ws.Rows.Count).ClearContents
+ws.Range("I1:O" & ws.Rows.Count).ClearContents
+
+ws.Range("A:G").NumberFormat = "General"
+ws.Range("I:O").NumberFormat = "General"
+
+Dim linhasA As Variant, linhasB As Variant
+linhasA = SplitTextBox(Me.TabelaA.Value)
+linhasB = SplitTextBox(Me.TabelaB.Value)
+
+Dim i As Long, j As Long
+Dim fields As Variant
+Dim wsRow As Long
+
+wsRow = 1
+For i = LBound(linhasA) To UBound(linhasA)
+    If Len(Trim(linhasA(i))) > 0 Then
+        fields = Split(linhasA(i), vbTab)
+        For j = 0 To 6 ' 7 colunas (A a G)
+            If j <= UBound(fields) Then
+                ws.Cells(wsRow, 1 + j).Value = fields(j)
+            End If
+        Next j
+        wsRow = wsRow + 1
+    End If
+Next i
+
+wsRow = 1
+For i = LBound(linhasB) To UBound(linhasB)
+    If Len(Trim(linhasB(i))) > 0 Then
+        fields = Split(linhasB(i), vbTab)
+        For j = 0 To 6 ' 7 colunas (I a O)
+            If j <= UBound(fields) Then
+                ws.Cells(wsRow, 9 + j).Value = fields(j) ' I = coluna 9
+            End If
+        Next j
+        wsRow = wsRow + 1
+    End If
+Next i
+
+ws.Range("Q5").Value = TextBox1.Value
+
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+
+Me.Hide
+
+Resultados.Show
+
+End Sub
+
+Private Sub TabelaA_Change()
+
+Me.TabelaA.MaxLength = 0
+
+End Sub
+
+Private Sub TabelaB_Change()
+
+Me.TabelaB.MaxLength = 0
+
+End Sub
+
+
+
+
+
+
+Private Sub UserForm_Initialize()
+Dim ctrl As Control
+
+Me.BackColor = RGB(0, 64, 39)
+
+For Each ctrl In Me.Controls
+    Select Case TypeName(ctrl)
+
+        Case "Label"
+            If ctrl.Name <> "Calcular" Then
+                With ctrl
+                    .ForeColor = RGB(255, 255, 255)
+                    .Font.Name = "Segoe UI"
+                    .Font.Size = 11
+                    .Font.Bold = True
+                    .BackStyle = fmBackStyleTransparent
+                    .BorderStyle = fmBorderStyleNone
+                End With
+            End If
+
+        Case "TextBox"
+            With ctrl
+                .BackColor = RGB(255, 255, 255)
+                .ForeColor = RGB(0, 64, 39)
+                .Font.Name = "Segoe UI"
+                .Font.Size = 11
+                .Font.Bold = True
+                .BorderStyle = fmBorderStyleSingle
+            End With
+    End Select
+Next ctrl
+
+With Me.Calcular
+    .Caption = "Calcular"
+    .BackColor = RGB(255, 204, 0)
+    .ForeColor = RGB(0, 64, 39)
+    .Font.Name = "Segoe UI"
+    .Font.Size = 11
+    .Font.Bold = True
+    .TextAlign = fmTextAlignCenter
+    .BorderStyle = fmBorderStyleSingle
+    .BackStyle = fmBackStyleOpaque
+    .MousePointer = fmMousePointerHand
+    .SpecialEffect = fmSpecialEffectFlat ' remove efeito 3D
+End With
+
+End Sub
+
+Private Sub Calcular_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Calcular.BackColor = RGB(255, 230, 120)
+End Sub
+
+Private Sub UserForm_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Calcular.BackColor = RGB(255, 204, 0)
+End Sub
+
+Private Sub UserForm_Activate()
+
+Me.Left = (Application.Width - Me.Width) / 2 + Application.Left
+Me.Top = (Application.Height - Me.Height) / 2 + Application.Top
+
+End Sub
