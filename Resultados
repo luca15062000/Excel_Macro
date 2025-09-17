@@ -1,0 +1,95 @@
+Private Sub Label1_Click()
+
+End Sub
+
+Private Sub Label2_Click()
+
+End Sub
+
+Private Sub ResultadoTotal1_Change()
+
+End Sub
+
+Private Sub ResultadoTotal2_Change()
+
+End Sub
+
+Private Sub UserForm_Activate()
+    With Me
+    
+        .ResultadoTotal1.MaxLength = 0
+        .ResultadoTotal2.MaxLength = 0
+        .ResultadoTotal1.Value = Sheets("Macro Club365").Range("Q1").Value
+        .ResultadoTotal2.Value = Sheets("Macro Club365").Range("Q2").Value
+        .ResultadoTotal1.Value = Format(Sheets("Macro Club365").Range("Q1").Value, "0.00")
+        .ResultadoTotal2.Value = Format(Sheets("Macro Club365").Range("Q2").Value, "0.00")
+        
+
+    End With
+    Dim ctrl As Control
+
+Me.BackColor = RGB(0, 64, 39)
+
+For Each ctrl In Me.Controls
+    Select Case TypeName(ctrl)
+
+        Case "Label"
+            If ctrl.Name <> "Voltar" Then
+                With ctrl
+                    .ForeColor = RGB(255, 255, 255)
+                    .Font.Name = "Segoe UI"
+                    .Font.Size = 11
+                    .Font.Bold = True
+                    .BackStyle = fmBackStyleTransparent
+                    .BorderStyle = fmBorderStyleNone
+                End With
+            End If
+
+        Case "TextBox"
+            With ctrl
+                .BackColor = RGB(255, 255, 255)
+                .ForeColor = RGB(0, 64, 39)
+                .Font.Name = "Segoe UI"
+                .Font.Size = 11
+                .Font.Bold = True
+                .BorderStyle = fmBorderStyleSingle
+            End With
+    End Select
+Next ctrl
+
+With Me.Voltar
+    .Caption = "Voltar"
+    .BackColor = RGB(255, 204, 0)
+    .ForeColor = RGB(0, 64, 39)
+    .Font.Name = "Segoe UI"
+    .Font.Size = 11
+    .Font.Bold = True
+    .TextAlign = fmTextAlignCenter
+    .BorderStyle = fmBorderStyleSingle
+    .BackStyle = fmBackStyleOpaque
+    .MousePointer = fmMousePointerHand
+    .SpecialEffect = fmSpecialEffectFlat ' remove efeito 3D
+End With
+
+Me.Left = (Application.Width - Me.Width) / 2 + Application.Left
+Me.Top = (Application.Height - Me.Height) / 2 + Application.Top
+   
+End Sub
+
+Private Sub Voltar_Click()
+
+Me.Hide
+
+ColarTabelas.Show
+
+End Sub
+
+
+
+Private Sub Voltar_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Voltar.BackColor = RGB(255, 230, 120)
+End Sub
+
+Private Sub UserForm_MouseMove(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
+Voltar.BackColor = RGB(255, 204, 0)
+End Sub
